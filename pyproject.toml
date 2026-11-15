@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "vr-gyro-screen"
-version = "0.1.0"
+version = "0.1.1"
 description = "Flat PC games on a big screen inside a VR headset, with the controllers as a motion sensor gamepad"
 readme = "README.md"
 license = { text = "MIT" }

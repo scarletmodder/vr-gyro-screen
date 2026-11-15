@@ -73,3 +73,33 @@ def test_screen_and_background_options_reach_the_configuration(tmp_path: Path, m
 def test_bench_refuses_a_rate_of_zero(capsys: pytest.CaptureFixture[str]) -> None:
     assert cli.main(["bench", "--rate", "0"]) == cli.EXIT_USAGE
     assert "greater than zero" in capsys.readouterr().err
+
+
+def _check_with(monkeypatch: pytest.MonkeyPatch, problem: Exception) -> int:
+    """Runs `check` as if loading the gamepad library raised `problem`; the others load."""
+    import importlib
+
+    def fake_import(name: str) -> object:
+        if name == "vgamepad":
+            raise problem
+        return object()
+
+    monkeypatch.setattr("vr_gyro_screen.prerequisites.check_all", lambda: [])
+    monkeypatch.setattr(importlib, "import_module", fake_import)
+    return cli.main(["check"])
+
+
+def test_check_without_the_gamepad_driver_is_not_a_library_failure(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    code = _check_with(monkeypatch, RuntimeError(f"Error: {cli.DRIVER_MISSING_MARK}"))
+    assert code == cli.EXIT_OK
+    assert "library vgamepad: ok (its driver is missing)" in capsys.readouterr().out
+
+
+def test_check_fails_when_a_library_does_not_load(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    code = _check_with(monkeypatch, OSError("the library file is missing"))
+    assert code == cli.EXIT_PROBLEM
+    assert "library vgamepad: failed" in capsys.readouterr().out

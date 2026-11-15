@@ -22,6 +22,8 @@ from .config import (
 )
 
 EXIT_OK, EXIT_PROBLEM, EXIT_USAGE = 0, 1, 2
+# What the gamepad library says, when it loads, on a computer that does not have its driver.
+DRIVER_MISSING_MARK = "VIGEM_ERROR_BUS_NOT_FOUND"
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -136,6 +138,10 @@ def _check() -> int:
         try:
             importlib.import_module(name)
         except Exception as error:  # any failure here is the answer the person needs
+            if DRIVER_MISSING_MARK in str(error):
+                # The gamepad library loaded and asked for its driver, which is reported above.
+                print(f"library {name}: ok (its driver is missing)")
+                continue
             failed = True
             print(f"library {name}: failed ({type(error).__name__}: {error})")
         else:

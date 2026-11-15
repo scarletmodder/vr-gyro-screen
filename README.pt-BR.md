@@ -236,4 +236,6 @@ O app tem duas partes. A janela de configuração é um processo. Quando você a
 
 Instale as ferramentas de desenvolvimento com `pip install -e ".[dev]"`. As checagens que rodam a cada push são `ruff check .`, `ruff format --check .`, `mypy` e `python -m pytest`. Os testes cobrem a lógica que não precisa de headset nem de driver.
 
-Para gerar o instalador, rode `scripts\build.ps1` no PowerShell. Ele precisa do PyInstaller e do Inno Setup 6.3 ou mais novo. O resultado é `dist\VRGyroScreen-Setup-vX.Y.Z.exe` e um arquivo `SHA256SUMS.txt` com a soma de verificação dele. Como isso funciona está em [docs/architecture.pt-BR.md](docs/architecture.pt-BR.md).
+Para gerar o instalador, rode `scripts\build.ps1` no PowerShell. Ele precisa do PyInstaller e do Inno Setup 6.7 ou mais novo. O resultado é `dist\VRGyroScreen-Setup-vX.Y.Z.exe` e um arquivo `SHA256SUMS.txt` com a soma de verificação dele. Como isso funciona está em [docs/architecture.pt-BR.md](docs/architecture.pt-BR.md).
+
+As versões novas são publicadas pelo GitHub, não à mão. Todo pull request gera o instalador, instala numa pasta temporária, roda a conferência do próprio programa instalado e desinstala. Para lançar, aumente `version` no `pyproject.toml` e no `src/vr_gyro_screen/__init__.py`, e escreva as notas em `docs/releases/vX.Y.Z.md`. Quando essa mudança chega à `main`, a versão é publicada com o instalador e a soma de verificação dele.

@@ -236,4 +236,6 @@ The app has two parts. The settings window is one process. When you press **Star
 
 Install the development tools with `pip install -e ".[dev]"`. The checks that run on every push are `ruff check .`, `ruff format --check .`, `mypy` and `python -m pytest`. The tests cover the logic that needs no headset and no driver.
 
-To build the installer, run `scripts\build.ps1` in PowerShell. It needs PyInstaller and Inno Setup 6.3 or newer. It writes `dist\VRGyroScreen-Setup-vX.Y.Z.exe` and a `SHA256SUMS.txt` file with its checksum. How it works is in [docs/architecture.md](docs/architecture.md).
+To build the installer, run `scripts\build.ps1` in PowerShell. It needs PyInstaller and Inno Setup 6.7 or newer. It writes `dist\VRGyroScreen-Setup-vX.Y.Z.exe` and a `SHA256SUMS.txt` file with its checksum. How it works is in [docs/architecture.md](docs/architecture.md).
+
+New versions are published by GitHub, not by hand. Every pull request builds the installer, installs it in a temporary folder, runs the installed program's own check and uninstalls it. To release, raise `version` in `pyproject.toml` and in `src/vr_gyro_screen/__init__.py`, and write the notes in `docs/releases/vX.Y.Z.md`. When that change reaches `main`, the version is published with the installer and its checksum.

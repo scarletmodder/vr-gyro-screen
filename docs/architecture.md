@@ -237,7 +237,7 @@ The recipe collects only the libraries the programs load. It leaves out on purpo
 1. Reads the version from `pyproject.toml`.
 2. Runs PyInstaller with the recipe. The result goes to `work\dist\vr-gyro-screen` (`work\` is not versioned).
 3. Runs `vr-gyro-screen-cli.exe check` on that folder. The build stops if a library of the packed copy does not load.
-4. Runs Inno Setup (6.3 or newer), the tool that makes the installer, with `installer/vr-gyro-screen.iss`.
+4. Runs Inno Setup (6.7 or newer), the tool that makes the installer, with `installer/vr-gyro-screen.iss`.
 5. Leaves `dist\VRGyroScreen-Setup-vX.Y.Z.exe` and `dist\SHA256SUMS.txt`, with the checksum of the installer. Older installers in `dist\` are deleted first, so nobody picks one by mistake.
 
 **`installer/vr-gyro-screen.iss`** describes the installer:

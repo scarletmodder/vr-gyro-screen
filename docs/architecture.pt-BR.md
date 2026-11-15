@@ -237,7 +237,7 @@ A receita junta só as bibliotecas que os programas carregam. Ela deixa de fora 
 1. Lê a versão do `pyproject.toml`.
 2. Roda o PyInstaller com a receita. O resultado vai para `work\dist\vr-gyro-screen` (`work\` não é versionado).
 3. Roda `vr-gyro-screen-cli.exe check` nessa pasta. A geração para se alguma biblioteca da cópia empacotada não carregar.
-4. Roda o Inno Setup (6.3 ou mais novo), a ferramenta que monta o instalador, com o `installer/vr-gyro-screen.iss`.
+4. Roda o Inno Setup (6.7 ou mais novo), a ferramenta que monta o instalador, com o `installer/vr-gyro-screen.iss`.
 5. Deixa `dist\VRGyroScreen-Setup-vX.Y.Z.exe` e `dist\SHA256SUMS.txt`, com a soma de verificação do instalador. Instaladores antigos em `dist\` são apagados antes, para ninguém pegar um deles por engano.
 
 **`installer/vr-gyro-screen.iss`** descreve o instalador:
