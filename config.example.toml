@@ -1,0 +1,61 @@
+# vr-gyro-screen configuration. Every value below is the default.
+# Copy to %APPDATA%\vr-gyro-screen\config.toml, or pass the file with --config.
+
+# performance | smooth. See docs/configuration.md for what each one changes.
+profile = "smooth"
+
+[screen]
+# "auto" picks the Virtual Desktop virtual monitor. A number is a position from
+# `vr-gyro-screen monitors`; any other text is matched against the monitor name.
+monitor = "auto"
+distance_m = 2.0
+width_m = 2.6
+# auto | passthrough | black
+background = "auto"
+
+[capture]
+# auto | gpu | direct | dxcam
+backend = "auto"
+# mipmaps and max_fps come from the profile unless set here.
+
+[gyro]
+# Which hand aims: left | right
+hand = "right"
+scale = 1.0
+deadzone_dps = 1.5
+keepalive = true
+
+# Controller input = gamepad button.
+# Inputs: a b x y menu left_stick_click right_stick_click left_trigger right_trigger left_squeeze right_squeeze
+# Buttons: CROSS CIRCLE SQUARE TRIANGLE SHOULDER_LEFT SHOULDER_RIGHT THUMB_LEFT THUMB_RIGHT OPTIONS SHARE PS TOUCHPAD
+[buttons]
+a = "CROSS"
+b = "CIRCLE"
+x = "SQUARE"
+left_squeeze = "SHOULDER_LEFT"
+right_squeeze = "SHOULDER_RIGHT"
+left_stick_click = "THUMB_LEFT"
+right_stick_click = "THUMB_RIGHT"
+menu = "OPTIONS"
+
+[triggers]
+left = "left_trigger"
+right = "right_trigger"
+
+[combo]
+# The combination key. Use "none" to turn combinations off.
+key = "y"
+# What the key does when pressed alone.
+solo = "TRIANGLE"
+solo_delay_s = 0.25
+# key + left stick = directional pad
+dpad = true
+# key + right stick = move the screen (up, down, nearer, farther)
+screen_adjust = true
+
+[combo.with]
+x = "SHARE"
+
+[recenter]
+# Hold both stick clicks for this long to bring the screen in front of you.
+hold_s = 1.0

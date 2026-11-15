@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.13"]
+    # The tool is Windows only; the tests cover the logic that needs no headset or driver.
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      # One command per step: pwsh only propagates the exit code of the last program in a block.
+      # Runtime dependencies are left out on purpose: the gamepad package installs a driver.
+      - name: Install the package without runtime dependencies
+        run: python -m pip install --no-deps -e .
+      - name: Install the development tools
+        run: python -m pip install "pytest>=8" "ruff>=0.6" "mypy>=1.11"
+      # The settings window is tested without a display; its library carries the types mypy reads.
+      - name: Install the window library
+        run: python -m pip install "pyside6-essentials>=6.8"
+      - name: ruff check
+        run: ruff check .
+      - name: ruff format
+        run: ruff format --check .
+      - name: mypy
+        run: mypy
+      - name: pytest
+        run: python -m pytest
